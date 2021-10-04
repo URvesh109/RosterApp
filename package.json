@@ -1,0 +1,66 @@
+{
+  "name": "Roster",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@fortawesome/react-native-fontawesome": "^0.2.7",
+    "@react-native-async-storage/async-storage": "^1.15.8",
+    "@react-native-community/netinfo": "^6.0.2",
+    "@react-navigation/bottom-tabs": "^6.0.7",
+    "@react-navigation/native": "^6.0.4",
+    "@react-navigation/native-stack": "^6.2.2",
+    "@react-navigation/stack": "^6.0.9",
+    "@types/lodash": "^4.14.175",
+    "apisauce": "^2.1.2",
+    "lodash": "^4.17.21",
+    "mobx": "^6.3.3",
+    "mobx-react-lite": "^3.2.1",
+    "mobx-state-tree": "^5.0.3",
+    "moment": "^2.29.1",
+    "react": "17.0.2",
+    "react-native": "0.66.0",
+    "react-native-flipper": "^0.113.0",
+    "react-native-gesture-handler": "^1.10.3",
+    "react-native-safe-area-context": "^3.3.2",
+    "react-native-screens": "^3.8.0",
+    "react-native-svg": "^12.1.1",
+    "rn-async-storage-flipper": "^0.0.10"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@babel/runtime": "^7.12.5",
+    "@react-native-community/eslint-config": "^2.0.0",
+    "@types/jest": "^26.0.23",
+    "@types/react-native": "^0.65.0",
+    "@types/react-test-renderer": "^17.0.1",
+    "babel-jest": "^26.6.3",
+    "eslint": "^7.14.0",
+    "jest": "^26.6.3",
+    "metro-react-native-babel-preset": "^0.66.2",
+    "react-test-renderer": "17.0.2",
+    "typescript": "^3.8.3"
+  },
+  "resolutions": {
+    "@types/react": "^17"
+  },
+  "jest": {
+    "preset": "react-native",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  }
+}
