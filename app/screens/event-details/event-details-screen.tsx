@@ -15,7 +15,7 @@ const WIDTH_IN_PER = (value: number) => {
 };
 
 const PADDING: ViewStyle = {
-  paddingVertical: SPACING.medium,
+  marginVertical: SPACING.medium,
 };
 
 type NameValueProp = {

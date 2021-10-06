@@ -29,6 +29,7 @@ const SECTION_TITLE: TextStyle = {
   fontSize: FONT_SIZE.large,
   fontWeight: 'bold',
   lineHeight: 15,
+  color: COLORS.black,
 };
 
 const TOUCHABLE_VIEW: ViewStyle = {

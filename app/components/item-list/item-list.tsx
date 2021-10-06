@@ -11,6 +11,7 @@ const SUB_TITLE: TextStyle = {
   fontSize: FONT_SIZE.large,
   fontWeight: 'bold',
   lineHeight: 15,
+  color: COLORS.black,
 };
 
 const SUB_LABEL: TextStyle = {
