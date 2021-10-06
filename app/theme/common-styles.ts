@@ -13,7 +13,7 @@ export const COMMON_STYLES = StyleSheet.create({
     alignItems: 'center',
   },
   label: {
-    fontSize: FONT_SIZE.large,
+    fontSize: FONT_SIZE.xl,
     lineHeight: 15,
     marginTop: SPACING.verySmall,
     color: COLORS.darkGrey,
@@ -21,4 +21,16 @@ export const COMMON_STYLES = StyleSheet.create({
   row: {
     flexDirection: 'row',
   },
+  card: {
+    marginTop: 10,
+    width: '100%',
+    borderRadius: SPACING.large,
+    backgroundColor: COLORS.grey,
+    padding: SPACING.large,
+    shadowColor: COLORS.grey,
+    shadowOffset: {width: 0, height: 0},
+    shadowOpacity: 1,
+    shadowRadius: 8,
+    justifyContent: 'space-between',
+  }
 });

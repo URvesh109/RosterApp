@@ -9,51 +9,26 @@ import {
   StyleSheet,
 } from 'react-native';
 import {COLORS, SPACING, COMMON_STYLES, FONT_SIZE} from '../../theme';
-import {LoadingIndicator, NoInternet, EmptyList} from '../../components';
-import {useNetInfo} from '../../hooks';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faSuitcase, faPlane, faFile} from '@fortawesome/free-solid-svg-icons';
-import {KEYS} from '../../utils';
+import {LoadingIndicator, EmptyList, ListComponent} from '../../components';
+import {dateFormatting} from '../../utils';
 import {NavigatorParamList} from '../../navigator';
 import {StackScreenProps} from '@react-navigation/stack';
+import {observer} from 'mobx-react-lite';
+import {useStores} from '../../models';
+import {Event} from '../../models/event/event';
 
 const SECTION_VIEW: ViewStyle = {
   height: 35,
   backgroundColor: COLORS.grey,
   justifyContent: 'center',
   paddingLeft: SPACING.large,
+  borderRadius: 4,
 };
 
 const SECTION_TITLE: TextStyle = {
-  fontSize: FONT_SIZE.medium,
-  fontWeight: 'bold',
-  lineHeight: 15,
-};
-
-const SUB_TITLE: TextStyle = {
   fontSize: FONT_SIZE.large,
   fontWeight: 'bold',
   lineHeight: 15,
-};
-
-const SUB_LABEL: TextStyle = {
-  fontSize: FONT_SIZE.medium,
-};
-
-const ICON_VIEW: ViewStyle = {
-  width: '15%',
-  justifyContent: 'center',
-  alignItems: 'center',
-};
-
-const WIDTH_55: ViewStyle = {
-  width: '55%',
-};
-
-const HOURS_VIEW: ViewStyle = {
-  width: '30%',
-  justifyContent: 'flex-end',
-  alignItems: 'flex-end',
 };
 
 const TOUCHABLE_VIEW: ViewStyle = {
@@ -67,106 +42,59 @@ const SEPERATOR_STYLE: ViewStyle = {
   borderBottomColor: COLORS.lightGrey,
 };
 
-const DATA = [
-  {
-    title: 'Main dishes',
-    data: ['Pizza', 'Burger', 'Risotto'],
-  },
-  {
-    title: 'Sides',
-    data: ['French Fries', 'Onion Rings', 'Fried Shrimps'],
-  },
-  {
-    title: 'Drinks',
-    data: ['Water', 'Coke', 'Beer'],
-  },
-  {
-    title: 'Desserts',
-    data: ['Cheese Cake', 'Ice Cream'],
-  },
-];
-
-export type Props = {
-  dutyCode: 'standby' | 'flight' | 'layover';
-  dutyValue: string;
-  id?: string;
-  time: string;
+type SectionTitleProps = {
+  title: string;
+  data: Event[];
 };
 
-const customStyle = [ICON_VIEW];
-
-const ListComponent: FC<Props> = props => {
-  const {dutyCode, dutyValue, id, time} = props;
-  let iconName = faFile;
-  let tempDutyCode = dutyCode.toLowerCase();
-  let crew;
-  if (tempDutyCode === KEYS.FLIGHT) {
-    iconName = faPlane;
-    customStyle.push({transform: [{rotate: '.45deg'}]});
-  } else if (tempDutyCode === KEYS.LAYOVER) {
-    iconName = faSuitcase;
-  } else {
-    crew = 'Match Crew';
+const SectionTitleComponent: FC<SectionTitleProps> = props => {
+  const {title, data} = props;
+  let modifyTitle = dateFormatting(title);
+  if (!data.length) {
+    return null;
   }
 
   return (
-    <>
-      <View style={customStyle}>
-        <FontAwesomeIcon icon={iconName} size={FONT_SIZE.xxl} />
+    <View style={COMMON_STYLES.card}>
+      <View style={SECTION_VIEW}>
+        <Text style={SECTION_TITLE}>{modifyTitle}</Text>
       </View>
-      <View style={WIDTH_55}>
-        <Text style={SUB_TITLE}>{dutyValue}</Text>
-        {id ? (
-          <Text style={[SUB_LABEL, {color: COLORS.lightGrey}]}>{id}</Text>
-        ) : null}
-      </View>
-      <View style={HOURS_VIEW}>
-        {crew ? (
-          <Text style={[SUB_LABEL, {color: COLORS.lightGrey}]}>{crew}</Text>
-        ) : null}
-        <Text style={[SUB_LABEL, {color: COLORS.red}]}>{time}</Text>
-      </View>
-    </>
+    </View>
   );
 };
 
 export const EventsScreen: FC<StackScreenProps<NavigatorParamList, 'event'>> =
-  ({navigation}) => {
-    const navigateToEventDetails = () => navigation.navigate('eventDetails');
-    const loading = false;
-    const isOnline = useNetInfo();
-    if (!isOnline) {
-      return <NoInternet />;
-    } else if (loading) {
+  observer(({navigation}) => {
+    const navigateToEventDetails = id => {
+      navigation.navigate('eventDetails', {id});
+    };
+    const {eventStore} = useStores();
+    const {eventSectionList, isLoading, pullToRefresh} = eventStore;
+    if (isLoading) {
       return <LoadingIndicator />;
     }
 
     return (
       <View style={COMMON_STYLES.full}>
         <SectionList
-          sections={DATA}
-          keyExtractor={(item, index) => item + index}
+          sections={eventSectionList}
+          keyExtractor={item => item.id}
           renderItem={({item}) => (
             <TouchableOpacity
               activeOpacity={0.6}
-              onPress={navigateToEventDetails}
+              onPress={() => navigateToEventDetails(item.id)}
               style={TOUCHABLE_VIEW}>
-              <ListComponent
-                dutyCode="standby"
-                dutyValue="Standby"
-                time="93:05 horus"
-                id="SBY(ATL)"
-              />
+              <ListComponent dutyCode={item.duty_code} eventObj={item} />
             </TouchableOpacity>
           )}
           ItemSeparatorComponent={() => <View style={SEPERATOR_STYLE} />}
           ListEmptyComponent={<EmptyList message="no item found" />}
-          renderSectionHeader={({section: {title}}) => (
-            <View style={SECTION_VIEW}>
-              <Text style={SECTION_TITLE}>mon 4th Oct, 2021 {title}</Text>
-            </View>
+          renderSectionHeader={({section: {data, title}}) => (
+            <SectionTitleComponent title={title} data={data} />
           )}
+          onRefresh={pullToRefresh}
+          refreshing={isLoading}
         />
       </View>
     );
-  };
+  });

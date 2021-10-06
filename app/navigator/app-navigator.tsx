@@ -1,26 +1,25 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {EventDetailsScreen, EventsScreen, DutiesScreen} from '../screens';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {
-  faCalendarAlt,
-  faSuitcase,
-  IconDefinition,
-} from '@fortawesome/free-solid-svg-icons';
+import {faCalendarAlt, faSuitcase} from '@fortawesome/free-solid-svg-icons';
 import {COLORS} from '../theme';
+import moment from 'moment';
 
 export type NavigatorParamList = {
   event: undefined;
-  eventDetails: undefined;
+  eventDetails: {id: string};
 };
 
 const Stack = createNativeStackNavigator<NavigatorParamList>();
 
 const EventStack = () => {
   return (
-    <Stack.Navigator initialRouteName="event">
+    <Stack.Navigator
+      initialRouteName="event"
+      screenOptions={{headerBackTitle: ''}}>
       <Stack.Screen
         name="event"
         component={EventsScreen}
@@ -35,9 +34,37 @@ const EventStack = () => {
   );
 };
 
+export type DutyNavigatorParamList = {
+  duties: undefined;
+  eventDetails: {id: string};
+};
+
+const DutyStack = createNativeStackNavigator<DutyNavigatorParamList>();
+
+const DutyNavigator = () => {
+  const currentDate = moment().format('ddd MMMM D, YYYY');
+
+  return (
+    <DutyStack.Navigator
+      initialRouteName="duties"
+      screenOptions={{headerBackTitle: ''}}>
+      <DutyStack.Screen
+        name="duties"
+        component={DutiesScreen}
+        options={{title: currentDate}}
+      />
+      <DutyStack.Screen
+        name="eventDetails"
+        component={EventDetailsScreen}
+        options={{title: 'Event Details'}}
+      />
+    </DutyStack.Navigator>
+  );
+};
+
 export type TabNavigatorParamList = {
   eventHome: undefined;
-  duties: undefined;
+  dutyHome: undefined;
 };
 
 const Tab = createBottomTabNavigator<TabNavigatorParamList>();
@@ -49,12 +76,13 @@ const ActiveInactiveTab = {
 
 const TabNav = () => {
   return (
-    <Tab.Navigator initialRouteName="eventHome">
+    <Tab.Navigator initialRouteName="dutyHome">
       <Tab.Screen
-        name="duties"
-        component={DutiesScreen}
+        name="dutyHome"
+        component={DutyNavigator}
         options={{
           title: 'Duties',
+          headerShown: false,
           ...ActiveInactiveTab,
           tabBarIcon: ({focused}) => (
             <FontAwesomeIcon

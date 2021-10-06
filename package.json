@@ -30,10 +30,12 @@
     "react-native": "0.66.0",
     "react-native-flipper": "^0.113.0",
     "react-native-gesture-handler": "^1.10.3",
+    "react-native-get-random-values": "^1.7.0",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.8.0",
     "react-native-svg": "^12.1.1",
-    "rn-async-storage-flipper": "^0.0.10"
+    "rn-async-storage-flipper": "^0.0.10",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

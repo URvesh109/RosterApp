@@ -1,29 +1,12 @@
 import React, {FC} from 'react';
 import {View, Text, ViewStyle} from 'react-native';
-import {COLORS, SPACING, COMMON_STYLES} from '../../theme';
-import {LoadingIndicator, NoInternet} from '../../components';
-import {useNetInfo} from '../../hooks';
-
-const CARD_VIEW: ViewStyle = {
-  marginTop: 10,
-  width: '100%',
-  borderRadius: SPACING.large,
-  backgroundColor: COLORS.grey,
-  padding: SPACING.large,
-  shadowColor: COLORS.grey,
-  shadowOffset: {width: 0, height: 0},
-  shadowOpacity: 1,
-  shadowRadius: 8,
-  justifyContent: 'space-between',
-};
-
-const ROW: ViewStyle = {
-  flexDirection: 'row',
-};
-
-const WIDTH_5: ViewStyle = {
-  width: '5%',
-};
+import {COMMON_STYLES, SPACING} from '../../theme';
+import {LoadingIndicator} from '../../components';
+import {observer} from 'mobx-react-lite';
+import {useStores} from '../../models';
+import {NavigatorParamList} from '../../navigator';
+import {StackScreenProps} from '@react-navigation/stack';
+import {KEYS, formatStandByForEventDetails} from '../../utils';
 
 const WIDTH_IN_PER = (value: number) => {
   return {
@@ -31,24 +14,8 @@ const WIDTH_IN_PER = (value: number) => {
   };
 };
 
-const WIDTH_10: ViewStyle = {
-  width: '10%',
-};
-
-const WIDTH_35: ViewStyle = {
-  width: '35%',
-};
-
-const WIDTH_40: ViewStyle = {
-  width: '40%',
-};
-
-const WIDTH_50: ViewStyle = {
-  width: '50%',
-};
-
-const WIDTH_55: ViewStyle = {
-  width: '55%',
+const PADDING: ViewStyle = {
+  paddingVertical: SPACING.medium,
 };
 
 type NameValueProp = {
@@ -65,7 +32,7 @@ const NameValueComponent: FC<NameValueProp> = ({
   const firstColumnWidth = isDoubleValue ? WIDTH_IN_PER(55) : WIDTH_IN_PER(40);
   const secondColumnWidth = isDoubleValue ? WIDTH_IN_PER(10) : WIDTH_IN_PER(5);
   const thirdColumnWidth = isDoubleValue ? WIDTH_IN_PER(35) : WIDTH_IN_PER(55);
-  const mainStyle = [ROW];
+  const mainStyle: any = [COMMON_STYLES.row, PADDING];
   if (isDoubleValue) {
     mainStyle.push(WIDTH_IN_PER(50));
   }
@@ -94,48 +61,70 @@ type NamesValuesProps = {
 const NamesValuesComponent: FC<NamesValuesProps> = props => {
   const {name1, name2, value1, value2} = props;
   return (
-    <View style={ROW}>
+    <View style={COMMON_STYLES.row}>
       <NameValueComponent name={name1} value={value1} isDoubleValue />
       <NameValueComponent name={name2} value={value2} isDoubleValue />
     </View>
   );
 };
 
-export const EventDetailsScreen = () => {
+export const EventDetailsScreen: FC<
+  StackScreenProps<NavigatorParamList, 'eventDetails'>
+> = observer(({route}) => {
+  const {id} = route.params;
   const loading = false;
-  const isOnline = useNetInfo();
-  if (!isOnline) {
-    return <NoInternet />;
-  } else if (loading) {
+  const {eventStore} = useStores();
+  const {events} = eventStore;
+
+  const selectedEvent = events.filter(item => item.id === id)[0];
+  let depart = selectedEvent.time_depart;
+  let arrive = selectedEvent.time_arrival;
+
+  if (selectedEvent.duty_code.toLowerCase() === KEYS.STANDBY) {
+    let depArr = formatStandByForEventDetails(depart, arrive);
+    depart = depArr.depart_time;
+    arrive = depArr.arr_time;
+  }
+
+  if (loading) {
     return <LoadingIndicator />;
   }
 
   return (
     <View style={COMMON_STYLES.full}>
-      <View style={CARD_VIEW}>
+      <View style={COMMON_STYLES.card}>
         <NamesValuesComponent
           name1="FlightNr"
-          value1="MX78"
+          value1={selectedEvent.flight_nr}
           name2="Tail"
-          value2="9878"
+          value2={selectedEvent.tail}
         />
         <NamesValuesComponent
           name1="Departure"
-          value1="AMS"
+          value1={selectedEvent.departure}
           name2="Destination"
-          value2="ALC"
+          value2={selectedEvent.destination}
         />
         <NamesValuesComponent
           name1="Time Depart"
-          value1="11:35"
+          value1={depart}
           name2="Time Arrive"
-          value2="14: 35"
+          value2={arrive}
         />
-        <NameValueComponent name="Aircraft Type" value="784-800E" />
-        <NameValueComponent name="Captain" value="Richard Versluis" />
-        <NameValueComponent name="First Officer" value="Jeroen Derwort" />
-        <NameValueComponent name="Flight Attendant" value="Lucy Stone" />
+        <NameValueComponent
+          name="Aircraft Type"
+          value={selectedEvent.aircraft_type}
+        />
+        <NameValueComponent name="Captain" value={selectedEvent.captain} />
+        <NameValueComponent
+          name="First Officer"
+          value={selectedEvent.first_officer}
+        />
+        <NameValueComponent
+          name="Flight Attendant"
+          value={selectedEvent.flight_attendant}
+        />
       </View>
     </View>
   );
-};
+});
