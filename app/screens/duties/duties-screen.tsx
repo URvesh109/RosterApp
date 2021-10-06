@@ -137,8 +137,6 @@ export const DutiesScreen: FC<
     return <LoadingIndicator />;
   }
 
-  console.log('Tod', todayRoster);
-
   return (
     <View style={COMMON_STYLES.full}>
       <SectionList

@@ -39,8 +39,6 @@ function filterReportingEvent(events: Event[]) {
     }
     return status;
   });
-  console.log('reportEvents', reportEvents);
-
   return reportEvents;
 }
 
