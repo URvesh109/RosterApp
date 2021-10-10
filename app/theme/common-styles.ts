@@ -20,7 +20,6 @@ export const COMMON_STYLES = StyleSheet.create({
     flexDirection: 'row',
   },
   card: {
-    marginBottom: 15,
     borderRadius: SPACING.large,
     backgroundColor: COLORS.grey,
     padding: SPACING.xl,

@@ -17,11 +17,6 @@ import {observer} from 'mobx-react-lite';
 import {useStores} from '../../models';
 import {Event} from '../../models/event/event';
 
-const SECTION_VIEW: ViewStyle = {
-  backgroundColor: COLORS.grey,
-  justifyContent: 'center',
-};
-
 const SECTION_TITLE: TextStyle = {
   fontSize: FONT_SIZE.xl,
   fontWeight: 'bold',

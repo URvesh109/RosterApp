@@ -12,7 +12,7 @@ const FLEX: ViewStyle = {
 };
 
 const TOUCHABLE_VIEW: ViewStyle = {
-  height: 50,
+  height: 55,
   padding: SPACING.large,
   flexDirection: 'row',
 };
