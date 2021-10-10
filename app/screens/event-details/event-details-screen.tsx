@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {View, Text, ViewStyle} from 'react-native';
+import {View, ScrollView, Text, ViewStyle} from 'react-native';
 import {COMMON_STYLES, SPACING} from '../../theme';
 import {LoadingIndicator} from '../../components';
 import {observer} from 'mobx-react-lite';
@@ -91,7 +91,7 @@ export const EventDetailsScreen: FC<
   }
 
   return (
-    <View style={COMMON_STYLES.full}>
+    <ScrollView style={COMMON_STYLES.full}>
       <View style={COMMON_STYLES.card}>
         <NamesValuesComponent
           name1="FlightNr"
@@ -125,6 +125,6 @@ export const EventDetailsScreen: FC<
           value={selectedEvent.flight_attendant}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 });
