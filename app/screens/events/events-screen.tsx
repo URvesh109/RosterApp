@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import {COLORS, SPACING, COMMON_STYLES, FONT_SIZE} from '../../theme';
+import {COLORS, COMMON_STYLES, FONT_SIZE} from '../../theme';
 import {LoadingIndicator, EmptyList, ListComponent} from '../../components';
 import {dateFormatting} from '../../utils';
 import {NavigatorParamList} from '../../navigator';
@@ -18,24 +18,14 @@ import {useStores} from '../../models';
 import {Event} from '../../models/event/event';
 
 const SECTION_VIEW: ViewStyle = {
-  height: 35,
   backgroundColor: COLORS.grey,
   justifyContent: 'center',
-  paddingLeft: SPACING.large,
-  borderRadius: 4,
 };
 
 const SECTION_TITLE: TextStyle = {
-  fontSize: FONT_SIZE.large,
+  fontSize: FONT_SIZE.xl,
   fontWeight: 'bold',
-  lineHeight: 15,
   color: COLORS.black,
-};
-
-const TOUCHABLE_VIEW: ViewStyle = {
-  height: 55,
-  padding: SPACING.large,
-  flexDirection: 'row',
 };
 
 const SEPERATOR_STYLE: ViewStyle = {
@@ -57,9 +47,7 @@ const SectionTitleComponent: FC<SectionTitleProps> = props => {
 
   return (
     <View style={COMMON_STYLES.card}>
-      <View style={SECTION_VIEW}>
-        <Text style={SECTION_TITLE}>{modifyTitle}</Text>
-      </View>
+      <Text style={SECTION_TITLE}>{modifyTitle}</Text>
     </View>
   );
 };
@@ -83,8 +71,7 @@ export const EventsScreen: FC<StackScreenProps<NavigatorParamList, 'event'>> =
           renderItem={({item}) => (
             <TouchableOpacity
               activeOpacity={0.6}
-              onPress={() => navigateToEventDetails(item.id)}
-              style={TOUCHABLE_VIEW}>
+              onPress={() => navigateToEventDetails(item.id)}>
               <ListComponent dutyCode={item.duty_code} eventObj={item} />
             </TouchableOpacity>
           )}

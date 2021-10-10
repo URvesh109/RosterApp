@@ -14,22 +14,21 @@ export const COMMON_STYLES = StyleSheet.create({
   },
   label: {
     fontSize: FONT_SIZE.xl,
-    // lineHeight: 15,
     color: COLORS.darkGrey,
   },
   row: {
     flexDirection: 'row',
   },
   card: {
-    marginTop: 10,
-    width: '100%',
+    marginBottom: 15,
     borderRadius: SPACING.large,
     backgroundColor: COLORS.grey,
-    padding: SPACING.large,
-    shadowColor: COLORS.grey,
-    shadowOffset: {width: 0, height: 0},
-    shadowOpacity: 1,
+    padding: SPACING.xl,
+    shadowColor: COLORS.darkGrey,
+    shadowOffset: {width: 0, height: 4},
+    shadowOpacity: 0.1,
     shadowRadius: 8,
     justifyContent: 'space-between',
+    elevation: 4,
   },
 });

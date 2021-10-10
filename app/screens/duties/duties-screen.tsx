@@ -7,7 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import {COLORS, COMMON_STYLES, SPACING} from '../../theme';
+import {COLORS, COMMON_STYLES} from '../../theme';
 import {LoadingIndicator, EmptyList, ListComponent} from '../../components';
 import {DutyNavigatorParamList} from '../../navigator';
 import {StackScreenProps} from '@react-navigation/stack';
@@ -21,7 +21,6 @@ const WIDTH_IN_PER = (value: number) => {
 };
 
 const LIST_TITLE: ViewStyle = {
-  height: 35,
   justifyContent: 'center',
   backgroundColor: COLORS.grey,
 };
@@ -31,11 +30,11 @@ const SEPERATOR_STYLE: ViewStyle = {
   borderBottomColor: COLORS.lightGrey,
 };
 
-const TOUCHABLE_VIEW: ViewStyle = {
-  height: 55,
-  padding: SPACING.large,
-  flexDirection: 'row',
-};
+// const TOUCHABLE_VIEW: ViewStyle = {
+//   height: 50,
+//   padding: SPACING.large,
+//   flexDirection: 'row',
+// };
 
 type NameValueProp = {
   name: string;
@@ -69,11 +68,11 @@ const EventTitle: FC<EvenTitle> = props => {
   const {listTitle} = props;
   return (
     <View style={COMMON_STYLES.card}>
-      <View style={LIST_TITLE}>
-        <Text style={[COMMON_STYLES.label, {fontWeight: 'bold'}]}>
-          {listTitle}
-        </Text>
-      </View>
+      {/* <View style={COMMON_STYLES.section_title}> */}
+      <Text style={[COMMON_STYLES.label, {fontWeight: 'bold'}]}>
+        {listTitle}
+      </Text>
+      {/* </View> */}
     </View>
   );
 };
@@ -145,8 +144,7 @@ export const DutiesScreen: FC<
         renderItem={({item}) => (
           <TouchableOpacity
             activeOpacity={0.6}
-            onPress={() => navigateToEventDetails(item.id)}
-            style={TOUCHABLE_VIEW}>
+            onPress={() => navigateToEventDetails(item.id)}>
             <ListComponent dutyCode={item.duty_code} eventObj={item} />
           </TouchableOpacity>
         )}

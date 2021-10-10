@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {View, Text, ViewStyle, TextStyle} from 'react-native';
-import {COLORS, FONT_SIZE} from '../../theme';
+import {COLORS, FONT_SIZE, SPACING} from '../../theme';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faSuitcase, faPlane, faFile} from '@fortawesome/free-solid-svg-icons';
 import {KEYS, formatStandBy, layoverTime} from '../../utils';
@@ -9,6 +9,12 @@ import {Event} from '../../models/event/event';
 
 const FLEX: ViewStyle = {
   flex: 1,
+};
+
+const TOUCHABLE_VIEW: ViewStyle = {
+  height: 50,
+  padding: SPACING.large,
+  flexDirection: 'row',
 };
 
 const SUB_TITLE: TextStyle = {
@@ -68,7 +74,7 @@ export const ListComponent: FC<Props> = props => {
   }
 
   return (
-    <>
+    <View style={TOUCHABLE_VIEW}>
       <View style={customStyle}>
         <FontAwesomeIcon icon={iconName} size={FONT_SIZE.xxl} />
       </View>
@@ -84,6 +90,6 @@ export const ListComponent: FC<Props> = props => {
           <Text style={[SUB_LABEL, {color: COLORS.red}]}>{time}</Text>
         </View>
       </View>
-    </>
+    </View>
   );
 };
