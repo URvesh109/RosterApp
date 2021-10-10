@@ -14,8 +14,7 @@ export const COMMON_STYLES = StyleSheet.create({
   },
   label: {
     fontSize: FONT_SIZE.xl,
-    lineHeight: 15,
-    marginTop: SPACING.verySmall,
+    // lineHeight: 15,
     color: COLORS.darkGrey,
   },
   row: {
@@ -32,5 +31,5 @@ export const COMMON_STYLES = StyleSheet.create({
     shadowOpacity: 1,
     shadowRadius: 8,
     justifyContent: 'space-between',
-  }
+  },
 });

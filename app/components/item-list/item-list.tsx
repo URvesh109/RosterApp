@@ -7,15 +7,19 @@ import {KEYS, formatStandBy, layoverTime} from '../../utils';
 import _ from 'lodash';
 import {Event} from '../../models/event/event';
 
+const FLEX: ViewStyle = {
+  flex: 1,
+};
+
 const SUB_TITLE: TextStyle = {
-  fontSize: FONT_SIZE.large,
+  fontSize: FONT_SIZE.xl,
   fontWeight: 'bold',
-  lineHeight: 15,
   color: COLORS.black,
 };
 
 const SUB_LABEL: TextStyle = {
-  fontSize: FONT_SIZE.medium,
+  fontSize: FONT_SIZE.large,
+  color: COLORS.black,
 };
 
 const ICON_VIEW: ViewStyle = {
@@ -24,14 +28,10 @@ const ICON_VIEW: ViewStyle = {
   alignItems: 'center',
 };
 
-const WIDTH_50: ViewStyle = {
-  width: '50%',
-};
-
-const HOURS_VIEW: ViewStyle = {
-  width: '35%',
-  justifyContent: 'flex-end',
-  alignItems: 'flex-end',
+const INFO_VIEW: ViewStyle = {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  flex: 1,
 };
 
 type Props = {
@@ -72,17 +72,17 @@ export const ListComponent: FC<Props> = props => {
       <View style={customStyle}>
         <FontAwesomeIcon icon={iconName} size={FONT_SIZE.xxl} />
       </View>
-      <View style={WIDTH_50}>
-        <Text style={SUB_TITLE}>{dest_arr}</Text>
-        {id ? (
-          <Text style={[SUB_LABEL, {color: COLORS.lightGrey}]}>{id}</Text>
-        ) : null}
-      </View>
-      <View style={HOURS_VIEW}>
-        {crew ? (
-          <Text style={[SUB_LABEL, {color: COLORS.lightGrey}]}>{crew}</Text>
-        ) : null}
-        <Text style={[SUB_LABEL, {color: COLORS.red}]}>{time}</Text>
+      <View style={FLEX}>
+        <View style={[INFO_VIEW, {alignItems: 'flex-end'}]}>
+          <Text style={SUB_TITLE}>{dest_arr}</Text>
+          <Text style={[SUB_LABEL, {color: COLORS.lightGrey}]}>
+            {crew || ''}
+          </Text>
+        </View>
+        <View style={INFO_VIEW}>
+          <Text style={[SUB_LABEL, {color: COLORS.lightGrey}]}>{id || ''}</Text>
+          <Text style={[SUB_LABEL, {color: COLORS.red}]}>{time}</Text>
+        </View>
       </View>
     </>
   );
