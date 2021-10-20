@@ -2,7 +2,8 @@ import {Event} from '../models/event/event';
 import {KEYS} from './constant';
 import moment from 'moment';
 
-const currentDate = moment().format('DD/MM/YYYY');
+// const currentDate = moment().format('DD/MM/YYYY');
+const currentDate = '07/07/2020';
 
 function filterDayOffEvent(events: Event[]) {
   let dayOffEvents = events.filter(data => {

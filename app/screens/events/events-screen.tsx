@@ -49,8 +49,9 @@ const SectionTitleComponent: FC<SectionTitleProps> = props => {
 
 export const EventsScreen: FC<StackScreenProps<NavigatorParamList, 'event'>> =
   observer(({navigation}) => {
-    const navigateToEventDetails = id => {
-      navigation.navigate('eventDetails', {id});
+    const navigateToEventDetails = item => {
+      let modifyTitle = dateFormatting(item.date);
+      navigation.navigate('eventDetails', {id: item.id, date: modifyTitle});
     };
     const {eventStore} = useStores();
     const {eventSectionList, isLoading, pullToRefresh} = eventStore;
@@ -66,7 +67,7 @@ export const EventsScreen: FC<StackScreenProps<NavigatorParamList, 'event'>> =
           renderItem={({item}) => (
             <TouchableOpacity
               activeOpacity={0.6}
-              onPress={() => navigateToEventDetails(item.id)}>
+              onPress={() => navigateToEventDetails(item)}>
               <ListComponent dutyCode={item.duty_code} eventObj={item} />
             </TouchableOpacity>
           )}

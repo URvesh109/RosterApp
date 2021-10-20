@@ -10,7 +10,7 @@ import moment from 'moment';
 
 export type NavigatorParamList = {
   event: undefined;
-  eventDetails: {id: string};
+  eventDetails: {id: string; date?: string};
 };
 
 const Stack = createNativeStackNavigator<NavigatorParamList>();
@@ -28,7 +28,7 @@ const EventStack = () => {
       <Stack.Screen
         name="eventDetails"
         component={EventDetailsScreen}
-        options={{title: 'Event Details'}}
+        options={({route}) => ({title: route.params.date})}
       />
     </Stack.Navigator>
   );
@@ -36,7 +36,7 @@ const EventStack = () => {
 
 export type DutyNavigatorParamList = {
   duties: undefined;
-  eventDetails: {id: string};
+  eventDetails: {id: string; date?: string};
 };
 
 const DutyStack = createNativeStackNavigator<DutyNavigatorParamList>();
@@ -56,7 +56,7 @@ const DutyNavigator = () => {
       <DutyStack.Screen
         name="eventDetails"
         component={EventDetailsScreen}
-        options={{title: 'Event Details'}}
+        options={{title: currentDate}}
       />
     </DutyStack.Navigator>
   );
