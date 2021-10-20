@@ -55,6 +55,10 @@ export const EventStoreModel = types
     get todayRoster() {
       return UTILS.getTodayDutiesRoster(self.events);
     },
+    fetchEventDetailsBy(id: string) {
+      const selectedEvent = self.events.filter(item => item.id === id)[0];
+      return selectedEvent;
+    },
   }))
   .actions(self => ({
     getEvents: async () => {

@@ -74,9 +74,9 @@ export const EventDetailsScreen: FC<
   const {id} = route.params;
   const loading = false;
   const {eventStore} = useStores();
-  const {events} = eventStore;
+  const {fetchEventDetailsBy} = eventStore;
 
-  const selectedEvent = events.filter(item => item.id === id)[0];
+  const selectedEvent = fetchEventDetailsBy(id);
   let depart = selectedEvent.time_depart;
   let arrive = selectedEvent.time_arrival;
 
