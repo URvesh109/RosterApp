@@ -91,7 +91,7 @@ export const EventDetailsScreen: FC<
   }
 
   return (
-    <ScrollView style={COMMON_STYLES.full}>
+    <ScrollView style={COMMON_STYLES.full} contentContainerStyle={PADDING}>
       <View style={COMMON_STYLES.card}>
         <NamesValuesComponent
           name1="FlightNr"
